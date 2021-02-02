@@ -2,7 +2,6 @@ package app
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"github.com/adenapila/market-go/service"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -28,16 +27,13 @@ func (ch *CustomerHandlers) getAllCustomers(w http.ResponseWriter, r *http.Reque
 	//	{Name: "Napila", City: "Jakarta", Zip: "15215"},
 	//}
 
-	customers, _ := ch.service.GetAllCustomer()
+	customers, err := ch.service.GetAllCustomer()
 
-	if r.Header.Get("Content-Type") == "application/xml" {
-		//merubah plain/text menjadi application/xml
-		w.Header().Add("Content-type", "application/xml")
-		xml.NewEncoder(w).Encode(customers)
+	if err != nil {
+		writeResponse(w, err.Code, err.AsMessage())
 	} else {
-		//merubah plain/text menjadi application/json
-		w.Header().Add("Content-type", "application/json")
-		json.NewEncoder(w).Encode(customers)
+		writeResponse(w, http.StatusOK, customers)
+
 	}
 }
 
