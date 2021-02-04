@@ -1,6 +1,9 @@
 package domain
 
-import "github.com/adenapila/market-go/errs"
+import (
+	"github.com/adenapila/market-go/dto"
+	"github.com/adenapila/market-go/errs"
+)
 
 type Customer struct {
 	Id          string `db:"customer_id"`
@@ -9,6 +12,27 @@ type Customer struct {
 	Zipcode     string
 	DateofBirth string `db:"date_of_birth"`
 	Status      string
+}
+
+func (c Customer) statusAsText() string {
+	//convert 1 to active status
+	statusAsText := "active"
+	if c.Status == "0" {
+		statusAsText = "inactive"
+	}
+	return statusAsText
+}
+
+func (c Customer) ToDto() dto.CustomerResponse {
+
+	return dto.CustomerResponse{
+		Id:          c.Id,
+		Name:        c.Name,
+		City:        c.City,
+		Zipcode:     c.Zipcode,
+		DateofBirth: c.DateofBirth,
+		Status:      c.statusAsText(),
+	}
 }
 
 type CustomerRepository interface {
