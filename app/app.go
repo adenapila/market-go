@@ -1,11 +1,13 @@
 package app
 
 import (
+	"fmt"
 	"github.com/adenapila/market-go/domain"
 	"github.com/adenapila/market-go/service"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 )
 
 func Start() {
@@ -29,7 +31,10 @@ func Start() {
 	//router.HandleFunc("/customers/{customer_id:[0-9]+}", getCustomer).Methods(http.MethodGet)
 
 	//starting server
-	log.Fatal(http.ListenAndServe("localhost:8888", router))
+	address := os.Getenv("SERVER_ADDRESS")
+	port := os.Getenv("SERVER_PORT")
+	//log.Fatal(http.ListenAndServe("localhost:8888", router))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", address, port), router))
 }
 
 //func getCustomer(w http.ResponseWriter, r *http.Request) {
