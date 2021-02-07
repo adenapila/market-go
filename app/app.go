@@ -38,10 +38,6 @@ func Start() {
 	router.HandleFunc("/customers/{customer_id:[0-9]+}", ch.getCustomer).Methods(http.MethodGet)
 	router.HandleFunc("/customers/{customer_id:[0-9]+}/account", ah.NewAccount).Methods(http.MethodPost)
 
-	//router.HandleFunc("/greet", greet).Methods(http.MethodGet)
-	//router.HandleFunc("/customers", createCustomers).Methods(http.MethodPost)
-	//router.HandleFunc("/customers/{customer_id:[0-9]+}", getCustomer).Methods(http.MethodGet)
-
 	//starting server
 	address := os.Getenv("SERVER_ADDRESS")
 	port := os.Getenv("SERVER_PORT")

@@ -27,7 +27,7 @@ func (s DefaultAccountService) NewAccount(req dto.NewAccountRequest) (*dto.NewAc
 		AccountId:   "",
 		CostumerId:  req.CustomerId,
 		OpeningDate: time.Now().Format("2006-01-02 15:04:05"),
-		AccountType: req.Accounttype,
+		AccountType: req.AccountType,
 		Amount:      req.Amount,
 		Status:      "1",
 	}
