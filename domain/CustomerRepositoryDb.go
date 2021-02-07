@@ -4,10 +4,8 @@ import (
 	"database/sql"
 	"github.com/adenapila/market-go/errs"
 	"github.com/adenapila/market-go/logger"
-	"github.com/jmoiron/sqlx"
-	"time"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
 type CustomerRepositoryDb struct {
@@ -51,14 +49,7 @@ func (d CustomerRepositoryDb) ById(id string) (*Customer, *errs.AppError) {
 	return &c, nil
 }
 
-func NewCustomerRepositoryDb() CustomerRepositoryDb {
-	client, err := sqlx.Open("mysql", "root:@tcp(localhost:3306)/banking")
-	if err != nil {
-		panic(err)
-	}
-	// See "Important settings" section.
-	client.SetConnMaxLifetime(time.Minute * 3)
-	client.SetMaxOpenConns(10)
-	client.SetMaxIdleConns(10)
-	return CustomerRepositoryDb{client: client}
+func NewCustomerRepositoryDb(dbClient *sqlx.DB) CustomerRepositoryDb {
+
+	return CustomerRepositoryDb{dbClient}
 }
