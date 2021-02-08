@@ -7,7 +7,7 @@ import (
 
 type Account struct {
 	AccountId   string
-	CostumerId  string
+	CustomerId  string
 	OpeningDate string
 	AccountType string
 	Amount      float64

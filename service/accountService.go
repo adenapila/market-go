@@ -16,16 +16,12 @@ type DefaultAccountService struct {
 }
 
 func (s DefaultAccountService) NewAccount(req dto.NewAccountRequest) (*dto.NewAccountResponse, *errs.AppError) {
-
 	err := req.Validate()
-
 	if err != nil {
 		return nil, err
 	}
-
 	a := domain.Account{
-		AccountId:   "",
-		CostumerId:  req.CustomerId,
+		CustomerId:  req.CustomerId,
 		OpeningDate: time.Now().Format("2006-01-02 15:04:05"),
 		AccountType: req.AccountType,
 		Amount:      req.Amount,

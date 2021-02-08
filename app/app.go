@@ -1,6 +1,7 @@
 package app
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/adenapila/market-go/domain"
 	"github.com/adenapila/market-go/service"
@@ -13,10 +14,12 @@ import (
 )
 
 func sanityCheck() {
-	if os.Getenv("SERVER_ADDRESS") == "" ||
-		os.Getenv("SERVER_PORT") == "" {
-		log.Fatal("Environment variable not defined...")
-	}
+}
+
+type Database struct {
+	host, user, password, dbname string
+	port                         int
+	db                           *sql.DB
 }
 
 func Start() {
@@ -44,15 +47,6 @@ func Start() {
 	//log.Fatal(http.ListenAndServe("localhost:8888", router))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", address, port), router))
 }
-
-//func getCustomer(w http.ResponseWriter, r *http.Request) {
-//	vars := mux.Vars(r)
-//	fmt.Fprint(w, vars["customer_id"])
-//}
-//
-//func createCustomers(w http.ResponseWriter, r *http.Request) {
-//	fmt.Fprint(w, "Post request received!")
-//}
 
 func getDbClient() *sqlx.DB {
 	dbUser := os.Getenv("DB_USER")

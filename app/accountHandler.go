@@ -23,7 +23,7 @@ func (h AccountHandler) NewAccount(w http.ResponseWriter, r *http.Request) {
 		request.CustomerId = customerId
 		account, appError := h.service.NewAccount(request)
 		if appError != nil {
-			writeResponse(w, appError.Code, appError.Message)
+			writeResponse(w, appError.Code, appError.AsMessage())
 		} else {
 			writeResponse(w, http.StatusCreated, account)
 		}
